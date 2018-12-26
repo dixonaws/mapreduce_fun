@@ -6,7 +6,7 @@ import json
 def main():
 	sys.stdout.write("Opening file... ")
 
-	with io.open("bible.txt", "r") as file_plaintext:
+	with io.open("tale_of_two_cities.txt", "r") as file_plaintext:
 		print("done, " + file_plaintext.name + ", " + "encoding is " + file_plaintext.encoding)
 
 		list_sorted_lines=[]
