@@ -6,4 +6,5 @@ enhanements:
 - process multiple files at one time
 - sanitize input files (remove punctuation)
 - further enhancements with an input/output writer, comparison function 
+- add threading
 - visualization feature
