@@ -124,4 +124,25 @@ def reduce(list_line_packages):
 
 	return (list_lines)
 
+def remove_punctuation(file):
+	string_file_content = file.read()
+
+	string_sanitized_content = string_file_content.replace('!', ' ')
+	string_sanitized_content = string_sanitized_content.replace(',', ' ')
+	string_sanitized_content = string_sanitized_content.replace('.', ' ')
+	string_sanitized_content = string_sanitized_content.replace('"', ' ')
+	string_sanitized_content = string_sanitized_content.replace('?', ' ')
+	string_sanitized_content = string_sanitized_content.replace("'", " ")
+	string_sanitized_content = string_sanitized_content.replace(";", " ")
+	string_sanitized_content = string_sanitized_content.replace(":", " ")
+	string_sanitized_content = string_sanitized_content.lower()
+	string_sanitized_content = string_sanitized_content.rstrip("\n\r")
+	string_sanitized_content = string_sanitized_content.rstrip()
+
+	# get rid of characters that ascii encoding can't deal with
+	string_sanitized_content = string_sanitized_content.decode("ascii", errors="ignore")
+
+	return (string_sanitized_content)
+
+
 main()
