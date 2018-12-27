@@ -18,8 +18,6 @@ def main():
 	int_elapsed_time = int_end_time - int_start_time
 	print("done (" + str(int_elapsed_time) + "ms).")
 
-	print(list_plaintext_lines)
-
 	sys.stdout.write("Closing file... ")
 	file_plaintext.close()
 	print("done.")
