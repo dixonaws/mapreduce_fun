@@ -4,58 +4,69 @@ import time
 import json
 
 def main():
+	int_master_start_time = int(round(time.time() * 1000))
+
 	sys.stdout.write("Opening file... ")
+	file_plaintext=open("tale_of_two_cities.txt", "r")
+	print("done (" + file_plaintext.name + ")")
 
-	with io.open("tale_of_two_cities.txt", "r") as file_plaintext:
-		print("done, " + file_plaintext.name + ", " + "encoding is " + file_plaintext.encoding)
+	# read each line of the file into a string
+	sys.stdout.write("Reading file... ")
+	int_start_time = int(round(time.time() * 1000))
+	list_plaintext_lines = file_plaintext.readlines()
+	int_end_time = int(round(time.time() * 1000))
+	int_elapsed_time = int_end_time - int_start_time
+	print("done (" + str(int_elapsed_time) + "ms).")
 
-		list_sorted_lines=[]
-		dict_word_frequency={}
+	print(list_plaintext_lines)
 
-		int_start_time=int(round(time.time() * 1000))
+	sys.stdout.write("Closing file... ")
+	file_plaintext.close()
+	print("done.")
 
-		sys.stdout.write("Running map() function... ")
-		list_line_packages=map(file_plaintext, 25)
+	# run a simulated map() function
+	sys.stdout.write("Running map() function... ")
+	int_start_time=int(round(time.time() * 1000))
+	list_line_packages=map(list_plaintext_lines, 25)
+	int_end_time = int(round(time.time() * 1000))
+	int_elapsed_time = int_end_time - int_start_time
+	print("done (" + str(int_elapsed_time) + "ms).")
 
-		int_end_time = int(round(time.time() * 1000))
-		int_elapsed_time = int_end_time - int_start_time
-		print("done (" + str(int_elapsed_time) + "ms).")
+	# run a simulated reduce() function
+	int_start_time = int(round(time.time() * 1000))
+	sys.stdout.write("Running reduce() function... ")
+	list_lines=reduce(list_line_packages)
+	int_end_time = int(round(time.time() * 1000))
+	int_elapsed_time = int_end_time - int_start_time
+	print("done (" + str(int_elapsed_time) + "ms).")
 
-		int_start_time = int(round(time.time() * 1000))
+	print("list_lines has " + str(len(list_lines)) + " elements.")
+	# print(list_sorted_lines)
 
-		sys.stdout.write("Running reduce() function... ")
-		list_lines=reduce(list_line_packages)
+	# combine the results from the map() function into list_result - the frequency of all words in the text file
+	dict_result={}
+	for package in list_lines:
+		for word in package:
+			# dict_result[word]=dict_result[word]+dict_result.get(word)
 
-		int_end_time = int(round(time.time() * 1000))
-		int_elapsed_time = int_end_time - int_start_time
-		print("done (" + str(int_elapsed_time) + "ms).")
+			try:
+				dict_result[word] = dict_result[word] + package.get(word)
+			except KeyError:
+				dict_result[word] = 1
+			# try
+		# for word
+	# for package
 
-		print("list_lines has " + str(len(list_lines)) + " elements.")
-		# print(list_sorted_lines)
+	print("Distinct words: " + str(len(dict_result)))
 
-		sys.stdout.write("Closing file... ")
-		file_plaintext.close()
-		print("done.")
+	list_sorted_word_count = (sorted(dict_result.items(), key=lambda t: t[1], reverse=True))
 
-		# combine the results from the map() function into list_result - the frequency of all words in the text file
-		dict_result={}
-		for package in list_lines:
-			for word in package:
-				# dict_result[word]=dict_result[word]+dict_result.get(word)
+	print("dict_result: " + str(json.dumps(list_sorted_word_count)))
 
-				try:
-					dict_result[word] = dict_result[word] + package.get(word)
-				except KeyError:
-					dict_result[word] = 1
-				# try
-			# for word
-		# for package
+	int_master_end_time = int(round(time.time() * 1000))
 
-		print("Distinct words: " + str(len(dict_result)))
-
-		list_sorted_word_count = (sorted(dict_result.items(), key=lambda t: t[1], reverse=True))
-
-		print("dict_result: " + str(json.dumps(list_sorted_word_count)))
+	int_master_elapsed_time=int_master_end_time-int_master_start_time
+	print("Finished in " + str(int_master_elapsed_time) + "ms.")
 
 
 # main()
@@ -66,11 +77,10 @@ def main():
 # in a reduce() function to count the frequency of words in the file. Each package is a list of strings.
 # The number of packages is defined by int_number_of_packages
 # Example: a text file containing 100222 lines and a desired package size of 25 would produce packages that have 4008 lines each (for example the bible.txt file included in this repo)
-def map(file, int_desired_packages):
+def map(list_plaintext_lines, int_desired_packages):
 	list_packages=[]
 
 	# sys.stdout.write("map(): Reading lines... ")
-	list_plaintext_lines = file.readlines()
 	int_number_of_lines = len(list_plaintext_lines)
 	# print("done, " + str(int_number_of_lines) + " lines.")
 
@@ -136,7 +146,7 @@ def remove_punctuation(file):
 	string_sanitized_content = string_sanitized_content.replace(";", " ")
 	string_sanitized_content = string_sanitized_content.replace(":", " ")
 	string_sanitized_content = string_sanitized_content.lower()
-	string_sanitized_content = string_sanitized_content.rstrip("\n\r")
+	string_sanitized_content = string_sanitized_content.rstrip("\r\n")
 	string_sanitized_content = string_sanitized_content.rstrip()
 
 	# get rid of characters that ascii encoding can't deal with

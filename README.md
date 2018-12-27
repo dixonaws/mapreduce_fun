@@ -7,4 +7,5 @@ enhanements:
 - sanitize input files (remove punctuation)
 - further enhancements with an input/output writer, comparison function 
 - add threading
+- add logging levels
 - visualization feature
