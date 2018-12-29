@@ -4,6 +4,9 @@ import time
 import json
 
 def main():
+	print("mapreducev1")
+	print
+
 	int_master_start_time = int(round(time.time() * 1000))
 
 	sys.stdout.write("Opening file... ")
