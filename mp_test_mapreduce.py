@@ -67,14 +67,11 @@ def reduce(str_filename, int_startpos, int_dataset_size, output):
 # *****
 
 def main():
-	lst_all_datasets = []
 	dict_all_words = {}
 
 	output = mp.Queue()
 
 	random.seed(123)
-
-	pool = mp.Pool(processes=8)
 
 	str_filename = "bible.txt"
 	int_desired_number_of_datasets = 25
@@ -89,14 +86,11 @@ def main():
 
 	# create a list so that we can start threads for each call to reduce()
 	for x in range(0, int_num_lines, int_step):
-		# lst_all_datasets.append(reduce(str_filename, x, (x + int_step)))
 		lst_processes.append(mp.Process(target=reduce, args=(str_filename, x, (x + int_step), output)))
-
-	print("lst_processes contains " + str(len(lst_processes)) + " processes")
 
 	lst_results = []
 
-	# start the parallel processes
+	# start the processes in parallel
 	for p in lst_processes:
 		p.start()
 
@@ -105,9 +99,7 @@ def main():
 		print(p.name + ": " + str(p.is_alive()))
 		lst_results.append(output.get())
 
-	print("lst_results contains: " + str(len(lst_results)) + " elements")
-
-	print("lst_results is a " + str(type(lst_results)))
+	print("lst_results contains: " + str(len(lst_results)) + " elements" + " (" + str(type(lst_results)) + ")")
 
 	for dict_word_count in lst_results:
 		for word in dict_word_count:
