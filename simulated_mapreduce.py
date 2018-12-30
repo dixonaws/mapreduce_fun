@@ -2,11 +2,6 @@ from MapReduceUtil import Clean
 from itertools import islice
 import multiprocessing as mp
 import random
-import string
-
-import json
-import sys
-
 
 def map(str_filename, int_desired_number_of_datasets):
 	"""
@@ -61,7 +56,6 @@ def reduce(str_filename, int_startpos, int_dataset_size, output):
 	# return (dict_dataset)
 	output.put(dict_dataset)
 
-
 # reduce()
 
 # *****
@@ -69,11 +63,12 @@ def reduce(str_filename, int_startpos, int_dataset_size, output):
 def main():
 	dict_all_words = {}
 
-	output = mp.Queue()
+	int_max_queue_size=8
+	output = mp.Queue(int_max_queue_size)
 
 	random.seed(123)
 
-	str_filename = "bible.txt"
+	str_filename = "datasets/bible.txt"
 	int_desired_number_of_datasets = 25
 	dict_map = map(str_filename, int_desired_number_of_datasets)
 
@@ -113,7 +108,6 @@ def main():
 	lst_sorted_word_count = (sorted(dict_all_words.items(), key=lambda t: t[1], reverse=True))
 
 	print("All words, word count: " + str(lst_sorted_word_count))
-
 
 # main()
 
