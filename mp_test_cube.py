@@ -26,6 +26,6 @@ print
 
 lst_args=[1,2,3,4,5,6]
 results2=pool.map(cube,lst_args)
-print results2
+print str(results2) + " (" + str(type(results2)) + ")"
 
 
