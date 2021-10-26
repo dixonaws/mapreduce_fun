@@ -3,7 +3,7 @@ resembling map() and reduce() functions in a hadoop system. I
 wrote this only as a study of the MapReduce algorithm and its
 applications.
 
-Enhancements:
+Todo/Enhancements:
 - take input files as parameters to the program
 - (done) simulate shared storage, pass a range to reduce() function instead of reading the entire file  
 - (done) mp to simulate processing on a multi-node cluster
