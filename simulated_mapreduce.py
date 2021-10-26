@@ -60,6 +60,7 @@ def reduce(str_filename, int_startpos, int_dataset_size, output):
 
 # *****
 
+# todo: include a CDK program to do the equivalent work in an EMR cluster and Athena query
 def main():
 	dict_all_words = {}
 
@@ -68,6 +69,7 @@ def main():
 
 	random.seed(123)
 
+	# todo: take the filename as a command line parameter
 	str_filename = "datasets/bible.txt"
 	int_desired_number_of_datasets = 25
 	dict_map = map(str_filename, int_desired_number_of_datasets)
