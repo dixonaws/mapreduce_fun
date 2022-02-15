@@ -15,6 +15,7 @@ Todo/Enhancements:
 - (done) mp to simulate processing on a multi-node cluster
 - logging levels
 - visualization feature
+- upgrade to Python3
 - AWS EMR equivalent
 - AWS Athena equivalent
 
